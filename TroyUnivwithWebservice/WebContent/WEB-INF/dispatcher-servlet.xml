@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		 http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+		p:prefix="/jsp/" p:suffix=".jsp" />
+
+	<context:component-scan base-package="com.cis.*" />
+
+
+	<bean name="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="org.h2.Driver" />
+		<property name="url" value="jdbc:h2:tcp://localhost/~/test;DB_CLOSE_DELAY=-1" />
+		<property name="username" value="sa" />
+		<property name="password" value="sa" />
+	</bean>
+	<mvc:annotation-driven />
+
+	<mvc:interceptors>
+
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<bean class="com.cis.controller.SessionManagment" />
+		</mvc:interceptor>
+		
+		
+		
+	</mvc:interceptors>
+
+	<bean name="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<constructor-arg>
+			<ref bean="dataSource" />
+		</constructor-arg>
+	</bean>
+
+	<bean name="namedJdbcTemplate"
+		class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+		<constructor-arg>
+			<ref bean="dataSource" />
+		</constructor-arg>
+	</bean>
+
+</beans>
