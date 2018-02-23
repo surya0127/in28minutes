@@ -1,6 +1,0 @@
-com\cis\service\UserService.class
-com\restful\webservice\NotificationRestContoller.class
-com\cis\controller\SessionManagment.class
-com\cis\controller\UserController.class
-com\cis\service\impl\UserServiceImpl.class
-com\cis\dao\CISDao.class
